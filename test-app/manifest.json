@@ -1,0 +1,1 @@
+{"id":"hello-world","name":"Hello World App","version":"1.0","description":"Servidor Python de Teste","port":8090,"cmd":"./start.sh"}
