@@ -1,4 +1,5 @@
 import { api } from '../api.js';
+import { escapeHTML } from '../utils.js';
 import { createSidebar } from '../components/Sidebar.js';
 import { createTopBar, restoreTheme } from '../components/TopBar.js';
 
@@ -97,19 +98,19 @@ async function loadCatalog(container) {
         <div style="display: flex; gap: 16px; align-items: flex-start;">
           <div class="card-icon" style="background: rgba(255,255,255,0.05); color: var(--text-primary); width: 52px; height: 52px; font-size: 26px; flex-shrink: 0;">${app.icon}</div>
           <div style="flex: 1; min-width: 0;">
-            <h3 style="font-size: var(--text-lg); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${app.name}</h3>
-            <div class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary);">${app.category}</div>
+            <h3 style="font-size: var(--text-lg); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHTML(app.name)}</h3>
+            <div class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary);">${escapeHTML(app.category)}</div>
           </div>
         </div>
-        <p class="text-secondary" style="font-size: var(--text-sm); line-height: 1.5; flex: 1;">${app.description}</p>
+        <p class="text-secondary" style="font-size: var(--text-sm); line-height: 1.5; flex: 1;">${escapeHTML(app.description)}</p>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
-          <span class="text-tertiary" style="font-size: var(--text-xs); font-family: var(--font-mono);">${app.version}</span>
+          <span class="text-tertiary" style="font-size: var(--text-xs); font-family: var(--font-mono);">${escapeHTML(app.version)}</span>
           <button class="btn" style="background: rgba(255,255,255,0.1); color: var(--text-primary);" onclick="alert('Download dos pacotes oficiais está previsto para uma atualização futura. Para agora, continue usando pacotes manuais (.tapp).')">Baixar App</button>
         </div>
       </div>
     `).join('');
 
   } catch (err) {
-    grid.innerHTML = `<div style="grid-column: 1/-1; color: var(--color-critical); padding: 20px;">Falha ao carregar catálogo: ${err.message}</div>`;
+    grid.innerHTML = `<div style="grid-column: 1/-1; color: var(--color-critical); padding: 20px;">Falha ao carregar catálogo: ${escapeHTML(err.message)}</div>`;
   }
 }

@@ -2,6 +2,7 @@
 
 import { route, startRouter, navigate } from './router.js';
 import { api, isAuthenticated } from './api.js';
+import { escapeHTML } from './utils.js';
 import { restoreTheme } from './components/TopBar.js';
 import { renderSetup } from './pages/Setup.js';
 import { renderLogin } from './pages/Login.js';
@@ -65,8 +66,8 @@ function createPlaceholderPage(title, description, id) {
     <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 100vh;">
       <div style="text-align: center; padding: 40px;">
         <div style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;">🚧</div>
-        <h2 style="font-size: var(--text-xl); font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">${title}</h2>
-        <p style="color: var(--text-secondary); font-size: var(--text-sm);">${description}</p>
+        <h2 style="font-size: var(--text-xl); font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">${escapeHTML(title)}</h2>
+        <p style="color: var(--text-secondary); font-size: var(--text-sm);">${escapeHTML(description)}</p>
         <a href="#/dashboard" class="btn mt-6" style="margin-top: 24px; display: inline-flex;">← Voltar ao Dashboard</a>
       </div>
     </div>

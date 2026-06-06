@@ -1,4 +1,5 @@
 import { api } from '../api.js';
+import { escapeHTML } from '../utils.js';
 import { createSidebar } from '../components/Sidebar.js';
 import { createTopBar, restoreTheme } from '../components/TopBar.js';
 
@@ -80,11 +81,11 @@ async function loadDisks(container) {
           <div style="font-size: 24px;">${disk.type === 'loop' ? '💿' : '💽'}</div>
           <div>
             <div style="font-weight: 500; display: flex; align-items: center; gap: 8px;">
-              ${disk.name} 
+              ${escapeHTML(disk.name)} 
               ${disk.is_system ? '<span class="badge" style="background: rgba(255,255,255,0.1); color: var(--color-warning);">Root OS</span>' : '<span class="badge" style="background: rgba(255,255,255,0.1); color: var(--color-healthy);">Disponível</span>'}
             </div>
             <div class="text-tertiary" style="font-size: var(--text-sm); font-family: var(--font-mono); margin-top: 4px;">
-              ${disk.size} • ${disk.path} • ${disk.type} ${disk.mountpoint ? `• Montado em: ${disk.mountpoint}` : ''}
+              ${escapeHTML(disk.size)} • ${escapeHTML(disk.path)} • ${escapeHTML(disk.type)} ${disk.mountpoint ? `• Montado em: ${escapeHTML(disk.mountpoint)}` : ''}
             </div>
           </div>
         </div>
@@ -98,6 +99,6 @@ async function loadDisks(container) {
     `).join('');
 
   } catch(e) {
-    disksList.innerHTML = `<div class="text-critical">Erro ao carregar discos: ${e.message}</div>`;
+    disksList.innerHTML = `<div class="text-critical">Erro ao carregar discos: ${escapeHTML(e.message)}</div>`;
   }
 }

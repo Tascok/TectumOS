@@ -1,4 +1,5 @@
 import { api } from '../api.js';
+import { escapeHTML } from '../utils.js';
 import { createSidebar } from '../components/Sidebar.js';
 import { createTopBar, restoreTheme } from '../components/TopBar.js';
 
@@ -53,18 +54,18 @@ async function loadApps(container) {
       return `
       <div class="card stagger-${(index % 6) + 1}">
         <div class="card-header" style="margin-bottom: 12px;">
-          <h3 style="font-size: 1.1rem; font-weight: 600;">${app.name} <span class="text-secondary text-sm" style="font-weight: 400;">v${app.version}</span></h3>
-          <span class="badge ${isActive ? 'healthy' : 'critical'}">${app.status}</span>
+          <h3 style="font-size: 1.1rem; font-weight: 600;">${escapeHTML(app.name)} <span class="text-secondary text-sm" style="font-weight: 400;">v${escapeHTML(app.version)}</span></h3>
+          <span class="badge ${isActive ? 'healthy' : 'critical'}">${escapeHTML(app.status)}</span>
         </div>
-        <p class="text-secondary text-sm mb-4" style="min-height: 40px;">Porta: ${app.port}</p>
+        <p class="text-secondary text-sm mb-4" style="min-height: 40px;">Porta: ${escapeHTML(app.port)}</p>
         
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           ${isActive 
-            ? `<button class="btn btn-sm btn-stop" data-id="${app.id}">Parar</button>` 
-            : `<button class="btn btn-sm btn-primary btn-start" data-id="${app.id}">Iniciar</button>`}
-          <button class="btn btn-sm btn-restart" data-id="${app.id}">Restart</button>
-          <a class="btn btn-sm" href="http://${window.location.hostname}:${app.port}" target="_blank">Abrir</a>
-          <button class="btn btn-sm btn-uninstall" data-id="${app.id}" style="margin-left: auto; color: var(--color-critical); border-color: var(--color-critical);">Desinstalar</button>
+            ? `<button class="btn btn-sm btn-stop" data-id="${escapeHTML(app.id)}">Parar</button>` 
+            : `<button class="btn btn-sm btn-primary btn-start" data-id="${escapeHTML(app.id)}">Iniciar</button>`}
+          <button class="btn btn-sm btn-restart" data-id="${escapeHTML(app.id)}">Restart</button>
+          <a class="btn btn-sm" href="http://${window.location.hostname}:${escapeHTML(app.port)}" target="_blank">Abrir</a>
+          <button class="btn btn-sm btn-uninstall" data-id="${escapeHTML(app.id)}" style="margin-left: auto; color: var(--color-critical); border-color: var(--color-critical);">Desinstalar</button>
         </div>
       </div>
     `}).join('');
@@ -79,7 +80,7 @@ async function loadApps(container) {
       }
     }));
   } catch (e) {
-    grid.innerHTML = `<p class="text-critical" style="grid-column: 1/-1;">Erro ao carregar apps: ${e.message}</p>`;
+    grid.innerHTML = `<p class="text-critical" style="grid-column: 1/-1;">Erro ao carregar apps: ${escapeHTML(e.message)}</p>`;
   }
 }
 

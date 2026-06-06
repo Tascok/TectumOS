@@ -1,4 +1,5 @@
 // TectumOS System Widgets
+import { escapeHTML } from '../utils.js';
 
 // Format bytes to human-readable
 export function formatBytes(bytes, decimals = 1) {
@@ -55,9 +56,9 @@ export function createCPUWidget(data = {}) {
           </div>
         </div>
         <div class="flex flex-col">
-          <span class="text-sm text-secondary">${data.model || 'Unknown CPU'}</span>
-          <span class="text-xs text-tertiary mt-2">${data.cores || '?'} cores · ${data.threads || '?'} threads</span>
-          ${data.temperature ? `<span class="text-xs text-tertiary mt-2">${data.temperature.toFixed(0)}°C</span>` : ''}
+          <span class="text-sm text-secondary">${escapeHTML(data.model) || 'Unknown CPU'}</span>
+          <span class="text-xs text-tertiary mt-2">${escapeHTML(data.cores) || '?'} cores · ${escapeHTML(data.threads) || '?'} threads</span>
+          ${data.temperature ? `<span class="text-xs text-tertiary mt-2">${escapeHTML(data.temperature.toFixed(0))}°C</span>` : ''}
         </div>
       </div>
     </div>
@@ -158,7 +159,7 @@ export function createStorageWidget(disks = []) {
       </div>
       ${disks.length > 0 ? `
         <div class="mt-4 text-xs text-tertiary">
-          ${disks.map(d => `${d.mount_point} — ${formatBytes(d.used)} / ${formatBytes(d.total)}`).join(' · ')}
+          ${disks.map(d => `${escapeHTML(d.mount_point)} — ${formatBytes(d.used)} / ${formatBytes(d.total)}`).join(' · ')}
         </div>
       ` : ''}
     </div>
@@ -177,9 +178,9 @@ export function createUptimeWidget(host = {}) {
           </svg>
         </div>
       </div>
-      <div class="metric-value sm">${host.uptime_human || '—'}</div>
-      <div class="metric-sub">${host.hostname || 'unknown'}</div>
-      <div class="text-xs text-tertiary mt-2">${host.platform || ''}</div>
+      <div class="metric-value sm">${escapeHTML(host.uptime_human) || '—'}</div>
+      <div class="metric-sub">${escapeHTML(host.hostname) || 'unknown'}</div>
+      <div class="text-xs text-tertiary mt-2">${escapeHTML(host.platform) || ''}</div>
     </div>
   `;
 }

@@ -25,8 +25,14 @@ async function handleRoute() {
     currentCleanup = null;
   }
 
-  // Find matching route
-  const handler = routes[path] || routes['/404'];
+  // Find matching route safely
+  let handler;
+  if (Object.prototype.hasOwnProperty.call(routes, path)) {
+    handler = routes[path];
+  } else {
+    handler = routes['/404'];
+  }
+
   if (!handler) {
     app.innerHTML = '<div class="auth-page"><p>Page not found</p></div>';
     return;

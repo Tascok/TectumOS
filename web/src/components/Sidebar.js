@@ -1,4 +1,5 @@
 // TectumOS Sidebar Component
+import { escapeHTML } from '../utils.js';
 
 // SVG icons (inline, no dependencies)
 const icons = {
@@ -33,7 +34,7 @@ export function createSidebar(activePage) {
       ${nav.map(item => `
         <a href="#${item.path}" class="nav-item ${activePage === item.id || activePage === item.path.substring(1) ? 'active' : ''}" data-link>
           ${item.icon}
-          <span>${item.label}</span>
+          <span>${escapeHTML(item.label)}</span>
         </a>
       `).join('')}
     </nav>
